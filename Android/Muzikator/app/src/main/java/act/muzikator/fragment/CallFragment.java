@@ -79,9 +79,9 @@ public class CallFragment extends Fragment {
       }
     });
 
-    // Create UI controls.
-    this.virtualInstrumentContainer =
-            (LinearLayout) controlView.findViewById(R.id.virtual_instrument_container);
+//    // Create UI controls.
+//    this.virtualInstrumentContainer =
+//            (LinearLayout) controlView.findViewById(R.id.virtual_instrument_container);
 
 
     scalingType = ScalingType.SCALE_ASPECT_FILL;
