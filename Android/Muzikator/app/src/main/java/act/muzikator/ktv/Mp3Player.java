@@ -3,6 +3,7 @@ package act.muzikator.ktv;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.nfc.Tag;
 import android.util.Log;
 
 import java.io.InputStream;
@@ -15,24 +16,15 @@ import javazoom.jl.decoder.SampleBuffer;
 /**
  * Created by vcoder on 4/9/16.
  */
-public class Mp3Player extends Thread {
-    public enum Event {
-        EOF,
-        REACH_LIMIT,
-        BAD_FORMAT
-    }
-
+public class Mp3Player extends Player {
     private final static String TAG = "Mp3Player";
     private Decoder decoder;
     private AudioTrack audioTrack;
-    private InputStream inputStream;
-    private int id;
-    private Mp3PlayerListener listener;
+    private boolean isPausing = false;
+    private boolean isStoped = false;
 
     public Mp3Player(int id, InputStream inputStream) {
-        super();
-        this.id = id;
-        this.inputStream = inputStream;
+        super(id, inputStream);
         // Init Decoder
         decoder = new Decoder();
 
@@ -51,15 +43,15 @@ public class Mp3Player extends Thread {
                 AudioTrack.MODE_STREAM);
     }
 
-    public void SetListener(Mp3PlayerListener listener) {
-        this.listener = listener;
-    }
-
     @Override
     public synchronized void start() {
-        super.start();
-        audioTrack.play();
-        listener.onPlay(id);
+        if(isPausing)
+            isPausing = false;
+        else {
+            super.start();
+            audioTrack.play();
+            listener.onPlay(id);
+        }
     }
 
     @Override
@@ -71,26 +63,52 @@ public class Mp3Player extends Thread {
             final int READ_THRESHOLD = 2147483647;
             int framesReaded = READ_THRESHOLD;
             Bitstream bitstream = new Bitstream(inputStream);
-            while(true) {
-                header = bitstream.readFrame();
-                if (header == null) {
-                    event = Event.BAD_FORMAT;
-                    break;
+            Log.d(TAG, "playing buffer 1: " + inputStream.available());
+            while (!isStoped) {
+                Log.d(TAG, "playing buffer 2");
+                if(!isPausing) {
+                    Log.d(TAG, "playing buffer 3");
+                    header = bitstream.readFrame();
+                    if (header == null) {
+                        Log.d(TAG, "playing buffer 4");
+                        event = Event.BAD_FORMAT;
+                        break;
+                    }
+                    Log.d(TAG, "playing buffer 5");
+                    SampleBuffer sampleBuffer = (SampleBuffer) decoder.decodeFrame(header, bitstream);
+                    short[] buffer = sampleBuffer.getBuffer();
+                    Log.d(TAG, "playing buffer:" + buffer.length);
+                    audioTrack.write(buffer, 0, buffer.length);
+                    framesReaded--;
+                    if (framesReaded == 0) {
+                        Log.d(TAG, "playing buffer 6");
+                        event = Event.EOF;
+                        break;
+                    }
+                    bitstream.closeFrame();
                 }
-                SampleBuffer sampleBuffer = (SampleBuffer) decoder.decodeFrame(header, bitstream);
-                short[] buffer = sampleBuffer.getBuffer();
-                audioTrack.write(buffer, 0, buffer.length);
-                framesReaded--;
-                if(framesReaded == 0) {
-                    event = Event.EOF;
-                    break;
-                }
-                bitstream.closeFrame();
             }
         } catch (Exception e) {
             event = Event.BAD_FORMAT;
             e.printStackTrace();
         }
-        listener.onStop(id, event);
+        if(!isStoped)
+            listener.onStop(id, event);
+    }
+
+    @Override
+    public void Pause() {
+        isPausing = true;
+    }
+
+    @Override
+    public void Stop() {
+        isStoped = true;
+    }
+
+    @Override
+    public void Release() {
+        audioTrack.stop();
+        audioTrack.release();
     }
 }

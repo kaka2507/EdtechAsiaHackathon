@@ -4,14 +4,16 @@ import android.content.Context;
 import android.media.MediaRecorder;
 import android.util.Log;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import act.muzikator.utils.KTVUtils;
 
 /**
  * Created by vcoder on 4/9/16.
  */
-public class KTVRecorder {
+public class KTVRecorder implements Player.PlayerListener {
     private final static String TAG = "KTVRecorder";
     private final static int BACKGROUND_ID = 1;
     private final static int RECORD_ID = 2;
@@ -19,10 +21,10 @@ public class KTVRecorder {
     private int resId;
     private Context context;
     private Mp3Player backgroundTrack;
+    private Mp3Player recordedTrack;
     public KTVRecorder(int resId, Context context) {
         this.resId = resId;
         this.context = context;
-        backgroundTrack = new Mp3Player(BACKGROUND_ID, context.getResources().openRawResource(resId));
     }
 
     public void StartRecording() throws IOException {
@@ -32,14 +34,66 @@ public class KTVRecorder {
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         recorder.setOutputFile(KTVUtils.GetRecordFilePath(context, resId));
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
         recorder.prepare();
 
+        // prepare to play background music
+        backgroundTrack = new Mp3Player(BACKGROUND_ID, context.getResources().openRawResource(resId));
+        backgroundTrack.SetListener(this);
+
         backgroundTrack.start();
-//        recorder.start();
+        recorder.start();
+    }
+
+    public void PauseRecording() {
+        backgroundTrack.Pause();
     }
 
     public void StopRecording() {
         recorder.stop();
+        recorder.release();
+        backgroundTrack.Stop();
+        backgroundTrack.Release();
+    }
+
+    public void StartPlaying() {
+        try {
+            // prepare to play background music
+            backgroundTrack = new Mp3Player(BACKGROUND_ID, context.getResources().openRawResource(resId));
+            backgroundTrack.SetListener(this);
+
+            // prepare to play record music
+            recordedTrack = new Mp3Player(RECORD_ID, new FileInputStream(KTVUtils.GetRecordFilePath(context, resId)));
+            recordedTrack.SetListener(this);
+
+            // play
+//            backgroundTrack.start();
+            recordedTrack.start();
+        } catch (IOException e) {
+            Log.e(TAG, "file is not existed");
+            e.printStackTrace();
+        }
+    }
+
+    public void StopPlaying() {
+//        backgroundTrack.Stop();
+        backgroundTrack.Release();
+        recordedTrack.Stop();
+        recordedTrack.Release();
+    }
+
+    @Override
+    public void onPlay(int id) {
+
+    }
+
+    @Override
+    public void onStop(int id, Player.Event event) {
+
+    }
+
+    @Override
+    public void onError(int id, Player.Event event) {
+        Log.d(TAG, "onError: id = " + id + " event:" + event);
     }
 }

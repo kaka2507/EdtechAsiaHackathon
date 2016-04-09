@@ -1,5 +1,6 @@
 package act.muzikator.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -69,15 +70,23 @@ public class PlaygroundActivity extends BaseActivity {
 
     @OnClick(R.id.song4)
     public void song4Selected() {
-        startSinging();
+        startPlayRecord();
     }
 
     @OnClick(R.id.song5)
     public void song5Selected() {
-        startSinging();
+        startPlayRecord();
     }
 
     private void startSinging() {
-        AppUtils.showActivity(this, SingingActivity.class);
+        Intent intent = new Intent(this, SingingActivity.class);
+        intent.putExtra(SingingActivity.MODE, SingingActivity.RECORD_MODE);
+        startActivity(intent);
+    }
+
+    private void startPlayRecord() {
+        Intent intent = new Intent(this, SingingActivity.class);
+        intent.putExtra(SingingActivity.MODE, SingingActivity.PLAY_MODE);
+        startActivity(intent);
     }
 }
