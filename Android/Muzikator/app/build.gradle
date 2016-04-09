@@ -4,6 +4,11 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
+    sourceSets.main {
+        jniLibs.srcDir 'libs'
+        jni.srcDirs = [] //disable automatic ndk-build call
+    }
+
     defaultConfig {
         applicationId "act.muzikator"
         minSdkVersion 16
@@ -28,7 +33,9 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.google.code.gson:gson:2.4'
+
     compile files('libs/libjingle_peerconnection.jar')
     compile files('libs/autobanh.jar')
     compile files('libs/TarsosDSP_Android_latest.jar')
+    compile files('libs/jl1.0.1.jar')
 }
