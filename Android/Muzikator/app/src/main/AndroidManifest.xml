@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="act.muzikator"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest package="act.muzikator"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
@@ -21,6 +20,14 @@
         <activity
             android:name=".activity.HomeActivity"
             android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.SelfLearningActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.ClassroomActivity">
+        </activity>
+        <activity android:name=".activity.PlaygroundActivity">
         </activity>
     </application>
 
