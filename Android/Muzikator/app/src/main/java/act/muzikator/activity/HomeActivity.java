@@ -1,14 +1,9 @@
 package act.muzikator.activity;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.webkit.URLUtil;
-
-import java.util.Random;
 
 import act.muzikator.R;
+import act.muzikator.utils.KTVUtils;
 import act.muzikator.utils.AppUtils;
 import butterknife.OnClick;
 
@@ -18,6 +13,7 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        KTVUtils.CreateDirIfNotExists(this);
     }
 
     @OnClick(R.id.selfLearning)

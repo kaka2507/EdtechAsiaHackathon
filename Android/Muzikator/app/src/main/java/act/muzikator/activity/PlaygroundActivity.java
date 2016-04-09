@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.ScrollView;
 
 import act.muzikator.R;
+import act.muzikator.utils.AppUtils;
 import butterknife.Bind;
 import butterknife.OnClick;
 
@@ -77,6 +78,6 @@ public class PlaygroundActivity extends BaseActivity {
     }
 
     private void startSinging() {
-
+        AppUtils.showActivity(this, SingingActivity.class);
     }
 }
