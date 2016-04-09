@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,10 @@ import act.muzikator.model.PitchingLesson;
  */
 public class LessonListAdapter extends ArrayAdapter<PitchingLesson> {
     private static class ViewHolder {
-
+        public TextView tempo;
+        public TextView viewCount;
+        public TextView passedCount;
+        public TextView failedCount;
     }
 
     private List<PitchingLesson> lessons;
@@ -41,6 +45,8 @@ public class LessonListAdapter extends ArrayAdapter<PitchingLesson> {
         lessons.add(new PitchingLesson(120, 40, 33, 5, 4));
         lessons.add(new PitchingLesson(125, 37, 27, 7, 5));
         lessons.add(new PitchingLesson(130, 32, 21, 8, 5));
+
+        addAll(lessons);
     }
 
     @Override
@@ -50,11 +56,10 @@ public class LessonListAdapter extends ArrayAdapter<PitchingLesson> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_pitch_lesson, parent, false);
 
             holder = new ViewHolder();
-            holder.certification = UiUtil.findView(R.id.certification, convertView);
-            holder.school = UiUtil.findView(R.id.school, convertView);
-            holder.detailMenu = UiUtil.findView(R.id.detail, convertView);
-            holder.year = UiUtil.findView(R.id.yearAttained, convertView);
-            holder.detailMenu.setOnClickListener(this);
+            holder.tempo = (TextView) convertView.findViewById(R.id.tempo);
+            holder.viewCount = (TextView) convertView.findViewById(R.id.viewCount);
+            holder.passedCount = (TextView) convertView.findViewById(R.id.passedCount);
+            holder.failedCount = (TextView) convertView.findViewById(R.id.failedCount);
 
             convertView.setTag(holder);
         } else {
@@ -62,10 +67,10 @@ public class LessonListAdapter extends ArrayAdapter<PitchingLesson> {
         }
 
         PitchingLesson item = getItem(position);
-        holder.certification.setText(item.getCertification());
-        holder.school.setText(item.getSchool());
-        holder.year.setText(item.getYearAttained());
-        holder.detailMenu.setTag(position);
+        holder.tempo.setText(item.getTempo() + "");
+        holder.viewCount.setText(item.getViewCount() + "");
+        holder.passedCount.setText(item.getPassedCount() + "");
+        holder.failedCount.setText(item.getFailedCount() + "");
 
         return convertView;
     }

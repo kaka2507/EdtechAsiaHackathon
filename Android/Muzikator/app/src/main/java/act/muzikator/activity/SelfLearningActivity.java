@@ -1,20 +1,34 @@
 package act.muzikator.activity;
 
 import android.os.Bundle;
-import android.widget.ListView;
 
 import act.muzikator.R;
-import act.muzikator.adapter.LessonListAdapter;
-import butterknife.Bind;
+import butterknife.OnClick;
 
 public class SelfLearningActivity extends BaseActivity {
-    @Bind(R.id.lessonList) ListView listView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_self_learning);
+    }
 
-        listView.setAdapter(new LessonListAdapter(this, 0));
+    @OnClick(R.id.pitchLesson1)
+    public void viewLesson1() {
+
+    }
+
+    @OnClick(R.id.pitchLesson2)
+    public void viewLesson2() {
+
+    }
+
+    @OnClick(R.id.pitchLesson3)
+    public void viewLesson3() {
+
+    }
+
+    @OnClick(R.id.pitchLesson4)
+    public void viewLesson4() {
+
     }
 }
