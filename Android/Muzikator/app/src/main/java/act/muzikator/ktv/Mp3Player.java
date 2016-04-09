@@ -1,4 +1,4 @@
-package act.muzikator.audio;
+package act.muzikator.ktv;
 
 import android.media.AudioFormat;
 import android.media.AudioManager;

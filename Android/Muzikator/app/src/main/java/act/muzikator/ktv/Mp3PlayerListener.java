@@ -1,4 +1,4 @@
-package act.muzikator.audio;
+package act.muzikator.ktv;
 
 /**
  * Created by vcoder on 4/9/16.

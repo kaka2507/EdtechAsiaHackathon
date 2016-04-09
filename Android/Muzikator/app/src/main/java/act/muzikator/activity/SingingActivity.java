@@ -37,8 +37,5 @@ public class SingingActivity extends BaseActivity {
     @OnClick(R.id.button_singing_pause)
     public void StopRecording() {
         Log.d(TAG, "StopRecording");
-        try {
-
-        }
     }
 }
