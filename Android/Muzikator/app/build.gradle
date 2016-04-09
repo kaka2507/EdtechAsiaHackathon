@@ -35,4 +35,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
     compile files('libs/libjingle_peerconnection.jar')
     compile files('libs/autobanh.jar')
+    compile files('libs/jl1.0.1.jar')
 }
