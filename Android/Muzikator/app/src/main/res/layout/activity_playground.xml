@@ -1,13 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="act.muzikator.activity.PlaygroundActivity">
+    android:background="@drawable/bg_playground"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context="act.muzikator.activity.ClassroomActivity">
 
-</RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.6"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="34dp"
+        android:layout_marginRight="34dp"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/songsButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/ic_song_bt"
+            android:stateListAnimator="@null"/>
+
+        <Button
+            android:id="@+id/collectionButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_collection_bt"
+            android:stateListAnimator="@null"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7.4">
+
+        <ScrollView
+            android:id="@+id/collectionWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:id="@+id/song4"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="6dp"
+                    android:clickable="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_playground_song1"/>
+
+                <ImageView
+                    android:id="@+id/song5"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="6dp"
+                    android:clickable="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_playground_song2"/>
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/songWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:id="@+id/song1"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="6dp"
+                    android:clickable="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_playground_song1"/>
+
+                <ImageView
+                    android:id="@+id/song2"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="6dp"
+                    android:clickable="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_playground_song2"/>
+
+                <ImageView
+                    android:id="@+id/song3"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="6dp"
+                    android:clickable="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_playground_song3"/>
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+</LinearLayout>
