@@ -97,6 +97,8 @@ public class CallActivity extends Activity
       "org.appspot.apprtc.RUNTIME";
   private static final String TAG = "CallRTCClient";
 
+  public static boolean VIRTUAL_INSTRUMENT_ENABLED = false;
+
   // List of mandatory application permissions.
   private static final String[] MANDATORY_PERMISSIONS = {
     "android.permission.MODIFY_AUDIO_SETTINGS",
@@ -315,6 +317,11 @@ public class CallActivity extends Activity
   @Override
   public void onCallHangUp() {
     disconnect();
+  }
+
+  @Override
+  public void onTogglePiano() {
+    Log.d("eee", "Sexy girl");
   }
 
   @Override
