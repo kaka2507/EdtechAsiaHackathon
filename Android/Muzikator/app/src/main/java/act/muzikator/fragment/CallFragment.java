@@ -53,7 +53,7 @@ public class CallFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     controlView =
-        inflater.inflate(R.layout.fragment_call_2, container, false);
+        inflater.inflate(R.layout.fragment_call, container, false);
 
     // Create UI controls.
     disconnectButton =
