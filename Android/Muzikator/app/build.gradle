@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.jakewharton:butterknife:7.0.1'
@@ -30,4 +30,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
     compile files('libs/libjingle_peerconnection.jar')
     compile files('libs/autobanh.jar')
+    compile files('libs/TarsosDSP_Android_latest.jar')
 }
