@@ -8,24 +8,18 @@ app.listen(23712);
 io.of('/central').on('connection', function(socket) {
     var joinedRoom = null;
 
-    socket.on('test', function(load) {
-        console.log('gggg');
-        console.log(load);
-    });
-
     // Edtech start the classroom
     socket.on('edtech-classroom-start-request', function(load) {
         var info = JSON.parse(load);
-
-        joinedRoom = info.room_id;
         socket.join(info.room_id);
+        console.log('joined room '+ info.room_id);
+        joinedRoom = info.room_id;
 
+        // Respond to sender
         socket.emit(
             'edtech-classroom-start-response',
             JSON.stringify({
-                status  : true,
-                role    : 'guest',
-                msg     : 'Succesfully joined the room',
+                msg     : 'Succesfully joined room '+info.room_id,
             })
         );
 
@@ -33,26 +27,25 @@ io.of('/central').on('connection', function(socket) {
         socket.broadcast.to(info.room_id).send(
             JSON.stringify ({
                 type  : 'edtech-classroom-start-response',
-                status: true,
-                msg   : {
-                    from    : 'guest',
-                    action  : 'join',
-                }
+                msg   : 'Someone joined room '+info.room_id,
             })
         );
     });
 
     // Edtech send the message
     socket.on('edtech-classroom-chat-send', function(load) {
+        // socket.broadcast.emit('edtech-classroom-chat-response', load);
+        console.log('Server received signal '+load);
+
         if (joinedRoom) {
             var info = JSON.parse(load);
+            console.log(info);
+
+            // socket.broadcast.emit('message', "this is a test");
             socket.broadcast.to(info.room_id).send(
                 JSON.stringify({
-                    type  : 'edtech-classroom-response',
-                    status: true,
-                    msg   : {
-                        text : info.text,
-                    }
+                    type    : 'edtech-classroom-chat-response',
+                    content : info.content
                 })
             );
         } else {
