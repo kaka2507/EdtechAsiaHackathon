@@ -22,26 +22,22 @@
         android:layout_marginTop="4dp"
         android:orientation="horizontal">
 
-        <ToggleButton
+        <Button
             android:id="@+id/popularButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/ic_class_tab_popular"
-            android:stateListAnimator="@null"
-            android:textOff=""
-            android:textOn=""/>
+            android:stateListAnimator="@null"/>
 
-        <ToggleButton
+        <Button
             android:id="@+id/historyButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:background="@drawable/ic_class_tab_history"
-            android:stateListAnimator="@null"
-            android:textOff=""
-            android:textOn=""/>
+            android:stateListAnimator="@null"/>
     </LinearLayout>
 
     <FrameLayout
@@ -64,6 +60,7 @@
                 android:paddingRight="10dp">
 
                 <ImageView
+                    android:id="@+id/tutor4"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
                     android:layout_marginTop="6dp"
@@ -88,6 +85,7 @@
                 android:paddingRight="10dp">
 
                 <ImageView
+                    android:id="@+id/tutor1"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
                     android:layout_marginTop="6dp"
@@ -96,6 +94,7 @@
                     android:src="@drawable/ic_class_tutor1"/>
 
                 <ImageView
+                    android:id="@+id/tutor2"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
                     android:layout_marginTop="6dp"
@@ -104,6 +103,7 @@
                     android:src="@drawable/ic_class_tutor2"/>
 
                 <ImageView
+                    android:id="@+id/tutor3"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
                     android:layout_marginTop="6dp"
