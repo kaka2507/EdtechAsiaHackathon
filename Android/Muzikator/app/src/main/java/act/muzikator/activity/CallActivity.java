@@ -320,11 +320,6 @@ public class CallActivity extends Activity
   }
 
   @Override
-  public void onTogglePiano() {
-    Log.d("eee", "Sexy girl");
-  }
-
-  @Override
   public void onCameraSwitch() {
     if (peerConnectionClient != null) {
       peerConnectionClient.switchCamera();

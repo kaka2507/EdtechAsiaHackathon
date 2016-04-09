@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -33,17 +34,17 @@ public class CallFragment extends Fragment {
   private View controlView;
   private ImageButton disconnectButton;
   private ImageButton pianoButton;
-  private LinearLayout virtualInstrumentContainer;
+  private RelativeLayout virtualInstrumentContainer;
   private OnCallEvents callEvents;
   private ScalingType scalingType;
   private boolean videoCallEnabled = true;
+  private boolean isDisplayingPiano = false;
 
   /**
    * Call control interface for container activity.
    */
   public interface OnCallEvents {
     public void onCallHangUp();
-    public void onTogglePiano();
     public void onCameraSwitch();
     public void onVideoScalingSwitch(ScalingType scalingType);
     public void onCaptureFormatChange(int width, int height, int framerate);
@@ -75,14 +76,20 @@ public class CallFragment extends Fragment {
     pianoButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        callEvents.onTogglePiano();
+        if(virtualInstrumentContainer.isShown()) {
+          virtualInstrumentContainer.setVisibility(View.INVISIBLE);
+        } else {
+          virtualInstrumentContainer.setVisibility(View.VISIBLE);
+        }
       }
     });
 
 //    // Create UI controls.
-//    this.virtualInstrumentContainer =
-//            (LinearLayout) controlView.findViewById(R.id.virtual_instrument_container);
-
+    this.virtualInstrumentContainer =
+            (RelativeLayout) controlView.findViewById(R.id.virtual_instrument_container);
+    if(this.virtualInstrumentContainer.isShown()) {
+      this.virtualInstrumentContainer.setVisibility(View.INVISIBLE);
+    }
 
     scalingType = ScalingType.SCALE_ASPECT_FILL;
 
