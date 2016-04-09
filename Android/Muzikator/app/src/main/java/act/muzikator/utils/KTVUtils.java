@@ -14,7 +14,7 @@ import act.muzikator.R;
 public class KTVUtils {
     private static final String TAG = "KTVUtils";
     static public String GetRecordFilePath(Context context, int resId) {
-        return Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + context.getString(R.string.app_storage) + "/" + resId + ".mp3";
+        return Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + context.getString(R.string.app_storage) + "/" + resId + ".aac";
     }
 
     public static boolean CreateDirIfNotExists(Context context) {

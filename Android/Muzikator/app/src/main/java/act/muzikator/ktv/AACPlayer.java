@@ -20,12 +20,13 @@ import act.muzikator.utils.Debug;
  */
 public class AACPlayer extends Player implements AACDecoder.AACDecoderListener {
     private final static String TAG = "AACPlayer";
-    private static final int MAX_BUFF_LEN = 1024;
+    private static final int MAX_BUFF_LEN = 2048;
     private AACDecoder decoder;
     private byte[] recorderBuffer = null;
     private int recorderBufferLength = 0;
     private AudioTrack audioTrack = null;
     private Timer timer;
+    private boolean isInitted = false;
 
     // task for decoder
     private TimerTask timerTask = new TimerTask() {
@@ -41,12 +42,7 @@ public class AACPlayer extends Player implements AACDecoder.AACDecoderListener {
     };
 
     private void doMyDecoderTask() throws Exception {
-        long currentTs = System.currentTimeMillis();
-
-        if (decoder.Execute() == AACDecoder.Status.TIMEOUT) {
-            release();
-            listener.onError(id, Event.FAILED_DECODE);
-        }
+        decoder.Execute();
     }
 
     private void release() {
@@ -67,6 +63,7 @@ public class AACPlayer extends Player implements AACDecoder.AACDecoderListener {
         super.start();
         try {
             decoder.Init();
+            decoder.SetListener(this);
             timer = new Timer();
             timer.schedule(timerTask,  0, 20);
         } catch (Exception e)  {
@@ -77,11 +74,15 @@ public class AACPlayer extends Player implements AACDecoder.AACDecoderListener {
     @Override
     public void run() {
         super.run();
+        Debug.log(this, "AACPlayer main loop");
         // try to read AAC file
+        if (recorderBuffer == null)
+            recorderBuffer = new byte[MAX_BUFF_LEN];
         while(true) {
             try {
+                Debug.log(this, "Loop to read AAC files buffLength:" + recorderBufferLength);
                 int numByteRead = 0;
-                if (recorderBufferLength != 0) {
+                if (recorderBufferLength > 0) {
                     Debug.log(this, "1 0 recorderBufferLength=" + recorderBufferLength);
                     // try to continue read audio data
                     if (recorderBufferLength < AACDecoder.HEADER_LENGTH) {
@@ -112,7 +113,7 @@ public class AACPlayer extends Player implements AACDecoder.AACDecoderListener {
                             recorderBufferLength = 0;
                         }
                     }
-                } else {
+                } else if(recorderBufferLength == 0) {
                     // try to read adts header
                     numByteRead = inputStream.read(recorderBuffer, 0, AACDecoder.HEADER_LENGTH);
                     recorderBufferLength += numByteRead;
@@ -132,6 +133,10 @@ public class AACPlayer extends Player implements AACDecoder.AACDecoderListener {
                             recorderBufferLength = 0;
                         }
                     }
+                } else {
+                    Log.d(TAG, "EOF Reached");
+                    listener.onStop(id, Event.EOF);
+                    break;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -143,6 +148,7 @@ public class AACPlayer extends Player implements AACDecoder.AACDecoderListener {
 
     @Override
     public void onDecodeFrame(AudioPacket packet) {
+        Debug.log(this, "onDecodeFrame package:" + packet.len);
         if(audioTrack == null) {
             // for init audio at the first received decoded frame
             int channelConfig = packet.channelCount == 1 ? AudioFormat.CHANNEL_OUT_MONO : AudioFormat.CHANNEL_OUT_STEREO;
