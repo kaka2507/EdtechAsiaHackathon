@@ -34,5 +34,50 @@
             android:layout_height="48dp"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/virtual_instrument_container"
+        android:orientation="horizontal"
+        android:layout_above="@+id/capture_format_text_call"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_marginBottom="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/button_1"
+            android:background="@drawable/khung_trang"
+            android:contentDescription="@string/disconnect_call"
+            android:layout_width="48dp"
+            android:layout_height="80dp"/>
+
+        <ImageButton
+            android:id="@+id/button_2"
+            android:background="@drawable/khung_den"
+            android:contentDescription="@string/disconnect_call"
+            android:layout_width="48dp"
+            android:layout_height="80dp"/>
+
+        <ImageButton
+            android:id="@+id/button_3"
+            android:background="@drawable/khung_trang"
+            android:contentDescription="@string/disconnect_call"
+            android:layout_width="48dp"
+            android:layout_height="80dp"/>
+
+        <ImageButton
+            android:id="@+id/button_4"
+            android:background="@drawable/khung_den"
+            android:contentDescription="@string/disconnect_call"
+            android:layout_width="48dp"
+            android:layout_height="80dp"/>
+
+        <ImageButton
+            android:id="@+id/button_5"
+            android:background="@drawable/khung_trang"
+            android:contentDescription="@string/disconnect_call"
+            android:layout_width="48dp"
+            android:layout_height="80dp"/>
+    </LinearLayout>
 
 </RelativeLayout>
