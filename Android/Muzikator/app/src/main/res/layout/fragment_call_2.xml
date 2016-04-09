@@ -34,7 +34,7 @@
             android:layout_height="48dp"/>
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/virtual_instrument_container"
         android:orientation="horizontal"
         android:layout_above="@+id/capture_format_text_call"
@@ -42,42 +42,107 @@
         android:layout_marginBottom="100dp"
         android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:paddingTop="15dp"
+        android:paddingBottom="1dp">
 
         <ImageButton
-            android:id="@+id/button_1"
+            android:id="@+id/key_C"
             android:background="@drawable/khung_trang"
             android:contentDescription="@string/disconnect_call"
-            android:layout_width="48dp"
-            android:layout_height="80dp"/>
+            android:layout_width="50dp"
+            android:layout_height="120dp"/>
 
         <ImageButton
-            android:id="@+id/button_2"
+            android:id="@+id/key_D"
+            android:background="@drawable/khung_trang"
+            android:contentDescription="@string/disconnect_call"
+            android:layout_width="50dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="51dp"/>
+
+        <ImageButton
+            android:id="@+id/key_E"
+            android:background="@drawable/khung_trang"
+            android:contentDescription="@string/disconnect_call"
+            android:layout_width="50dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="102dp"/>
+
+        <ImageButton
+            android:id="@+id/key_F"
+            android:background="@drawable/khung_trang"
+            android:contentDescription="@string/disconnect_call"
+            android:layout_width="50dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="153dp"/>
+
+        <ImageButton
+            android:id="@+id/key_G"
+            android:background="@drawable/khung_trang"
+            android:contentDescription="@string/disconnect_call"
+            android:layout_width="50dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="204dp"/>
+
+        <ImageButton
+            android:id="@+id/key_A"
+            android:background="@drawable/khung_trang"
+            android:contentDescription="@string/disconnect_call"
+            android:layout_width="50dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="255dp"/>
+
+        <ImageButton
+            android:id="@+id/key_B"
+            android:background="@drawable/khung_trang"
+            android:contentDescription="@string/disconnect_call"
+            android:layout_width="50dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="306dp"
+            android:layout_marginRight="1dp"/>
+
+        <ImageButton
+            android:id="@+id/key_CD"
             android:background="@drawable/khung_den"
             android:contentDescription="@string/disconnect_call"
-            android:layout_width="48dp"
-            android:layout_height="80dp"/>
+            android:layout_width="30dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="35dp"/>
 
         <ImageButton
-            android:id="@+id/button_3"
-            android:background="@drawable/khung_trang"
-            android:contentDescription="@string/disconnect_call"
-            android:layout_width="48dp"
-            android:layout_height="80dp"/>
-
-        <ImageButton
-            android:id="@+id/button_4"
+            android:id="@+id/key_DE"
             android:background="@drawable/khung_den"
             android:contentDescription="@string/disconnect_call"
-            android:layout_width="48dp"
-            android:layout_height="80dp"/>
+            android:layout_width="30dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="86dp"/>
 
         <ImageButton
-            android:id="@+id/button_5"
-            android:background="@drawable/khung_trang"
+            android:id="@+id/key_FG"
+            android:background="@drawable/khung_den"
             android:contentDescription="@string/disconnect_call"
-            android:layout_width="48dp"
-            android:layout_height="80dp"/>
-    </LinearLayout>
+            android:layout_width="30dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="188dp"/>
+
+        <ImageButton
+            android:id="@+id/key_GA"
+            android:background="@drawable/khung_den"
+            android:contentDescription="@string/disconnect_call"
+            android:layout_width="30dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="239dp"/>
+
+        <ImageButton
+            android:id="@+id/key_AB"
+            android:background="@drawable/khung_den"
+            android:contentDescription="@string/disconnect_call"
+            android:layout_width="30dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="290dp"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>
