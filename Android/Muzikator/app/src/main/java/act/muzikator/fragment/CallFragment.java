@@ -97,6 +97,18 @@ public class CallFragment extends Fragment {
     soundManager = new SoundManager();
     soundManager.initSounds(getActivity());
     soundManager.addSoundResource(R.raw.c4);
+    soundManager.addSoundResource(R.raw.d4);
+    soundManager.addSoundResource(R.raw.e4);
+    soundManager.addSoundResource(R.raw.f4);
+    soundManager.addSoundResource(R.raw.g4);
+    soundManager.addSoundResource(R.raw.a4);
+    soundManager.addSoundResource(R.raw.b4);
+    soundManager.addSoundResource(R.raw.c5);
+    soundManager.addSoundResource(R.raw.c4m);
+    soundManager.addSoundResource(R.raw.d4m);
+    soundManager.addSoundResource(R.raw.f4m);
+    soundManager.addSoundResource(R.raw.g4m);
+    soundManager.addSoundResource(R.raw.a4m);
     // todo : add resource sound here
 
     // Create UI controls for Piano Keys.
@@ -104,106 +116,105 @@ public class CallFragment extends Fragment {
     key_C.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Log.d("FFF", "REACHED HERE");
         soundManager.playSoundResource(R.raw.c4);
       }
     });
 
-//    key_D = (ImageButton) controlView.findViewById(R.id.key_D);
-//    key_D.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        callEvents.onCallKeyD();
-//      }
-//    });
-//
-//    key_E = (ImageButton) controlView.findViewById(R.id.key_E);
-//    key_E.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        callEvents.onCallKeyE();
-//      }
-//    });
-//
-//    key_F = (ImageButton) controlView.findViewById(R.id.key_F);
-//    key_F.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        callEvents.onCallKeyF();
-//      }
-//    });
-//
-//    key_G = (ImageButton) controlView.findViewById(R.id.key_G);
-//    key_G.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        callEvents.onCallKeyG();
-//      }
-//    });
-//
-//    key_A = (ImageButton) controlView.findViewById(R.id.key_A);
-//    key_A.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        callEvents.onCallKeyA();
-//      }
-//    });
-//
-//    key_B = (ImageButton) controlView.findViewById(R.id.key_B);
-//    key_B.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        callEvents.onCallKeyB();
-//      }
-//    });
-//
-//    key_C5 = (ImageButton) controlView.findViewById(R.id.key_C5);
-//    key_C5.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        callEvents.onCallKeyC5();
-//      }
-//    });
-//
-//    key_CD = (ImageButton) controlView.findViewById(R.id.key_CD);
-//    key_CD.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        callEvents.onCallKeyCD();
-//      }
-//    });
-//
-//    key_DE = (ImageButton) controlView.findViewById(R.id.key_DE);
-//    key_DE.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        callEvents.onCallKeyDE();
-//      }
-//    });
-//
-//    key_FG = (ImageButton) controlView.findViewById(R.id.key_FG);
-//    key_FG.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        callEvents.onCallKeyFG();
-//      }
-//    });
-//
-//    key_GA = (ImageButton) controlView.findViewById(R.id.key_GA);
-//    key_GA.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        callEvents.onCallKeyGA();
-//      }
-//    });
-//
-//    key_AB = (ImageButton) controlView.findViewById(R.id.key_AB);
-//    key_AB.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        callEvents.onCallKeyAB();
-//      }
-//    });
+    key_D = (ImageButton) controlView.findViewById(R.id.key_D);
+    key_D.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        soundManager.playSoundResource(R.raw.d4);
+      }
+    });
+
+    key_E = (ImageButton) controlView.findViewById(R.id.key_E);
+    key_E.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        soundManager.playSoundResource(R.raw.e4);
+      }
+    });
+
+    key_F = (ImageButton) controlView.findViewById(R.id.key_F);
+    key_F.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        soundManager.playSoundResource(R.raw.f4);
+      }
+    });
+
+    key_G = (ImageButton) controlView.findViewById(R.id.key_G);
+    key_G.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        soundManager.playSoundResource(R.raw.g4);
+      }
+    });
+
+    key_A = (ImageButton) controlView.findViewById(R.id.key_A);
+    key_A.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        soundManager.playSoundResource(R.raw.a4);
+      }
+    });
+
+    key_B = (ImageButton) controlView.findViewById(R.id.key_B);
+    key_B.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        soundManager.playSoundResource(R.raw.b4);
+      }
+    });
+
+    key_C5 = (ImageButton) controlView.findViewById(R.id.key_C5);
+    key_C5.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        soundManager.playSoundResource(R.raw.c5);
+      }
+    });
+
+    key_CD = (ImageButton) controlView.findViewById(R.id.key_CD);
+    key_CD.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        soundManager.playSoundResource(R.raw.c4m);
+      }
+    });
+
+    key_DE = (ImageButton) controlView.findViewById(R.id.key_DE);
+    key_DE.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        soundManager.playSoundResource(R.raw.d4m);
+      }
+    });
+
+    key_FG = (ImageButton) controlView.findViewById(R.id.key_FG);
+    key_FG.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        soundManager.playSoundResource(R.raw.f4m);
+      }
+    });
+
+    key_GA = (ImageButton) controlView.findViewById(R.id.key_GA);
+    key_GA.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        soundManager.playSoundResource(R.raw.g4m);
+      }
+    });
+
+    key_AB = (ImageButton) controlView.findViewById(R.id.key_AB);
+    key_AB.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        soundManager.playSoundResource(R.raw.a4m);
+      }
+    });
 
     scalingType = ScalingType.SCALE_ASPECT_FILL;
 
