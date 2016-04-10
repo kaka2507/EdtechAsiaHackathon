@@ -12,30 +12,18 @@ package act.muzikator.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
-
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Socket;
-
 import org.webrtc.RendererCommon.ScalingType;
-
-import java.net.URISyntaxException;
-
 import act.muzikator.R;
 import act.muzikator.activity.CallActivity;
 import act.muzikator.utils.SoundManager;
+import io.socket.client.Socket;
 
 /**
  * Fragment for call control.
@@ -244,33 +232,6 @@ public class CallFragment extends Fragment {
       captureSliderEnabled = videoCallEnabled
           && args.getBoolean(CallActivity.EXTRA_VIDEO_CAPTUREQUALITYSLIDER_ENABLED, false);
     }
-
-//    try {
-//      this.socket = IO.socket("http://192.168.10.119:23712/central");
-//      this.socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
-//
-//        @Override
-//        public void call(Object... args) {
-//          socket.emit("edtech-classroom-start-request", "hi");
-//          socket.disconnect();
-//        }
-//
-//      }).on("event", new Emitter.Listener() {
-//
-//        @Override
-//        public void call(Object... args) {}
-//
-//      }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
-//
-//        @Override
-//        public void call(Object... args) {}
-//
-//      });
-//      socket.connect();
-//    } catch (URISyntaxException e) {
-//      e.printStackTrace();
-//    }
-
   }
 
   @Override
