@@ -112,10 +112,13 @@ public class PitchingActivity extends BaseActivity {
                             int frequencyAtPitch = notes.get(currentNoteIndex).isFrequencyAtPitch(pitchInHz);
                             if (frequencyAtPitch == 0) {
                                 accuTime += (currentMarkedTime - lastMarkedTime);
+                                comment.setImageResource(R.drawable.ic_perfect);
                             } else if (frequencyAtPitch > 0) {
                                 highAccuTime += (currentMarkedTime - lastMarkedTime);
+                                comment.setImageResource(R.drawable.ic_too_high);
                             } else {
                                 lowAccuTime += (currentMarkedTime - lastMarkedTime);
+                                comment.setImageResource(R.drawable.ic_too_low);
                             }
                             lastMarkedTime = currentMarkedTime;
                         } else {
