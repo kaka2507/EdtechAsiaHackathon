@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
 import android.view.animation.LinearInterpolator;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,13 +33,15 @@ public class PitchingActivity extends BaseActivity {
     private static final int PITCH_THREAHOLD = 500;
 
     @Bind(R.id.pitchingStaff) PitchStaffView pitchingStaff;
+    @Bind(R.id.passCount)     TextView       passCount;
 
     private AudioDispatcher    dispatcher;
-    private int                animRoundCount;
     private int                originalRoundCount;
     private long               lastMarkedTime;
     private int                lastNoteIndex;
+    private int                currentNoteIndex;
     private int                accuTime;
+    private int                rightNoteCount;
     private List<PitchingNote> notes;
 
     @Override
@@ -46,7 +49,6 @@ public class PitchingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pitching);
 
-//        startRecording();
         PitchingUtils.prepare();
         Map<String, PitchingNote> noteMap = PitchingUtils.getNoteMap();
         notes = new ArrayList<>();
@@ -59,10 +61,12 @@ public class PitchingActivity extends BaseActivity {
         notes.add(noteMap.get("G4"));
         notes.add(noteMap.get("A4"));
         pitchingStaff.setNotes(notes);
-        animRoundCount = notes.size() - 1;
-        originalRoundCount = animRoundCount;
+        originalRoundCount = notes.size() - 1;
+        lastNoteIndex = 0;
+        currentNoteIndex = 0;
 
         pitchingStaff.getLayoutParams().width = notes.size() * getResources().getDimensionPixelSize(R.dimen.pitchNoteSide);
+        passCount.setText(String.format("0/%d", notes.size()));
     }
 
     private void startRecording() {
@@ -77,18 +81,25 @@ public class PitchingActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        int currentNoteIndex = originalRoundCount - animRoundCount - 1;
                         long currentMarkedTime = Calendar.getInstance().getTimeInMillis();
 
-                        if (currentNoteIndex == lastNoteIndex || currentNoteIndex == -1) {
-                            if (notes.get(lastNoteIndex).isFrequencyAtPitch(pitchInHz)) {
+                        if (currentNoteIndex == lastNoteIndex) {
+                            if (currentNoteIndex >= notes.size()) return;
+
+                            if (notes.get(currentNoteIndex).isFrequencyAtPitch(pitchInHz)) {
                                 accuTime += (currentMarkedTime - lastMarkedTime);
                             }
                             lastMarkedTime = currentMarkedTime;
                         } else {
                             pitchingStaff.markNoteResult(lastNoteIndex, accuTime >= PITCH_THREAHOLD);
+                            if (accuTime >= PITCH_THREAHOLD) {
+                                rightNoteCount++;
+                                passCount.setText(String.format("%d/%d", rightNoteCount, notes.size()));
+                            }
                             lastNoteIndex = currentNoteIndex;
                             accuTime = 0;
+
+                            if (currentNoteIndex >= notes.size()) return;
 
                             if (notes.get(currentNoteIndex).isFrequencyAtPitch(pitchInHz)) {
                                 accuTime += (currentMarkedTime - lastMarkedTime);
@@ -129,11 +140,11 @@ public class PitchingActivity extends BaseActivity {
     }
 
     private void animateStaff(final int noteWidth) {
-        animRoundCount--;
-        pitchingStaff.animate().setInterpolator(new LinearInterpolator()).translationX(-noteWidth * (originalRoundCount - animRoundCount)).setDuration(NOTE_DURATION).setListener(new AnimatorListenerAdapter() {
+        pitchingStaff.animate().setInterpolator(new LinearInterpolator()).translationX(-noteWidth * (currentNoteIndex + 1)).setDuration(NOTE_DURATION).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (animRoundCount >= 0) {
+                if (currentNoteIndex < notes.size()) {
+                    currentNoteIndex++;
                     animateStaff(noteWidth);
                 } else {
                     stopRecording();
