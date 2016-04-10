@@ -78,4 +78,18 @@ public class PitchingNote {
     public void setUpperBoundPitch(float upperBoundPitch) {
         this.upperBoundPitch = upperBoundPitch;
     }
+
+    public int isFrequencyAtPitch(float freq) {
+        if (pitch < 0) {
+            return freq < 0 ? 0 : 1;
+        } else {
+            if (freq > lowerBoundPitch && freq < upperBoundPitch) {
+                return 0;
+            } else if (freq > upperBoundPitch) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+    }
 }
