@@ -12,6 +12,7 @@ package act.muzikator.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,6 +51,7 @@ public class CallFragment extends Fragment {
   private ScalingType scalingType;
   private boolean videoCallEnabled = true;
   private boolean isDisplayingPiano = false;
+  private SoundManager soundManager;
   private Socket socket;
 
   /**
@@ -103,22 +105,21 @@ public class CallFragment extends Fragment {
       this.virtualInstrumentContainer.setVisibility(View.INVISIBLE);
     }
 
+    // Load Sound System
+    soundManager = new SoundManager();
+    soundManager.initSounds(getActivity());
+    soundManager.addSoundResource(R.raw.c4);
+    // todo : add resource sound here
+
     // Create UI controls for Piano Keys.
-//    key_C = (ImageButton) controlView.findViewById(R.id.key_C);
-//    key_C.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-////        Log.d("FFF", "REACHED HERE");
-////        callEvents.onCallKeyC();
-////        SoundManager sm = new SoundManager();
-////        sm.addSoundResource(R.raw.c4);
-////        sm.playSoundResource(R.raw.c4);
-//
-//
-////        MediaPlayer mediaPlayer=MediaPlayer.create(null, R.raw.c4);
-////        mediaPlayer.start();
-//      }
-//    });
+    key_C = (ImageButton) controlView.findViewById(R.id.key_C);
+    key_C.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Log.d("FFF", "REACHED HERE");
+        soundManager.playSoundResource(R.raw.c4);
+      }
+    });
 
 //    key_D = (ImageButton) controlView.findViewById(R.id.key_D);
 //    key_D.setOnClickListener(new View.OnClickListener() {
