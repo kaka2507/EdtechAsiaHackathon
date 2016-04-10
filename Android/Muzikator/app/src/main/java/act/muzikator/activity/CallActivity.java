@@ -37,8 +37,7 @@ import android.view.Window;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
 
-import com.github.nkzawa.socketio.client.IO;
-
+import org.json.JSONObject;
 import org.webrtc.EglBase;
 import org.webrtc.IceCandidate;
 import org.webrtc.PeerConnectionFactory;
@@ -47,10 +46,10 @@ import org.webrtc.StatsReport;
 import org.webrtc.RendererCommon.ScalingType;
 import org.webrtc.SurfaceViewRenderer;
 
-import java.net.Socket;
-
 import act.muzikator.R;
 import act.muzikator.fragment.CallFragment;
+import io.socket.client.*;
+import io.socket.emitter.Emitter;
 
 /**
  * Activity for peer connection call setup, call waiting
@@ -60,7 +59,7 @@ public class CallActivity extends Activity
     implements AppRTCClient.SignalingEvents,
       PeerConnectionClient.PeerConnectionEvents,
       CallFragment.OnCallEvents {
-
+  public static final String addr = "http://192.168.10.119:23712/central";
   public static final String EXTRA_ROOMID =
       "org.appspot.apprtc.ROOMID";
   public static final String EXTRA_LOOPBACK =
@@ -102,8 +101,6 @@ public class CallActivity extends Activity
       "org.appspot.apprtc.RUNTIME";
   private static final String TAG = "CallRTCClient";
 
-  public Socket socket;
-
   public static boolean VIRTUAL_INSTRUMENT_ENABLED = false;
 
   // List of mandatory application permissions.
@@ -112,6 +109,7 @@ public class CallActivity extends Activity
     "android.permission.RECORD_AUDIO",
     "android.permission.INTERNET"
   };
+
 
   // Peer connection statistics callback period in ms.
   private static final int STAT_CALLBACK_PERIOD = 1000;
@@ -155,6 +153,8 @@ public class CallActivity extends Activity
   CallFragment callFragment;
   HudFragment hudFragment;
 
+  private Socket socket;
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -165,15 +165,15 @@ public class CallActivity extends Activity
     // adding content.
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     getWindow().addFlags(
-        LayoutParams.FLAG_FULLSCREEN
-        | LayoutParams.FLAG_KEEP_SCREEN_ON
-        | LayoutParams.FLAG_DISMISS_KEYGUARD
-        | LayoutParams.FLAG_SHOW_WHEN_LOCKED
-        | LayoutParams.FLAG_TURN_SCREEN_ON);
+            LayoutParams.FLAG_FULLSCREEN
+                    | LayoutParams.FLAG_KEEP_SCREEN_ON
+                    | LayoutParams.FLAG_DISMISS_KEYGUARD
+                    | LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                    | LayoutParams.FLAG_TURN_SCREEN_ON);
     getWindow().getDecorView().setSystemUiVisibility(
-        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        | View.SYSTEM_UI_FLAG_FULLSCREEN
-        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     setContentView(R.layout.activity_call);
 
     iceConnected = false;
@@ -234,6 +234,33 @@ public class CallActivity extends Activity
       finish();
       return;
     }
+    try {
+      // Subscribe server with this room id
+      socket = IO.socket(addr);
+      socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+          socket.emit("edtech-classroom-chat-send", "lalalala");
+        }
+      }).on(Socket.EVENT_MESSAGE, new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+          if(args.length > 0) {
+            JSONObject obj = (JSONObject) args[0];
+            Log.d(TAG, "obj:" + obj);
+          }
+        }
+      }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+
+        }
+      });
+      socket.connect();
+    } catch (Exception e) {
+      Log.e(TAG, "Could not connect to server");
+    }
+
     boolean loopback = intent.getBooleanExtra(EXTRA_LOOPBACK, false);
     boolean tracing = intent.getBooleanExtra(EXTRA_TRACING, false);
     peerConnectionParameters = new PeerConnectionParameters(
