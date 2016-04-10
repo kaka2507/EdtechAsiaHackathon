@@ -10,6 +10,7 @@ io.of('/central').on('connection', function(socket) {
 
     // Edtech start the classroom
     socket.on('edtech-classroom-start-request', function(load) {
+        console.log('ffff');
         var info = JSON.parse(load);
         socket.join(info.room_id);
         console.log('joined room '+ info.room_id);
@@ -36,20 +37,23 @@ io.of('/central').on('connection', function(socket) {
     socket.on('edtech-classroom-chat-send', function(load) {
         // socket.broadcast.emit('edtech-classroom-chat-response', load);
         console.log('Server received signal '+load);
+        socket.broadcast.emit('message', load);
+        // socket.emit('message', load);
 
-        if (joinedRoom) {
-            var info = JSON.parse(load);
-            console.log(info);
+        // if (joinedRoom) {
+        //     var info = JSON.parse(load);
+        //     console.log(info);
 
-            // socket.broadcast.emit('message', "this is a test");
-            socket.broadcast.to(info.room_id).send(
-                JSON.stringify({
-                    type    : 'edtech-classroom-chat-response',
-                    content : info.content
-                })
-            );
-        } else {
-            console.log('User is not in a proper room');
-        }
+        //     // socket.broadcast.emit('message', "this is a test");
+        //     socket.broadcast.to(info.room_id).send(
+        //         JSON.stringify({
+        //             type    : 'edtech-classroom-chat-response',
+        //             content : info.content
+        //         })
+        //     );
+        // } else {
+        //     console.log('User is not in a proper room');
+        // }
     });
+
 });
