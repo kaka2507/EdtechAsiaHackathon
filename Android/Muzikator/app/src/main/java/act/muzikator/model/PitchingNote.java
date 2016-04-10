@@ -6,18 +6,20 @@ package act.muzikator.model;
 public class PitchingNote {
     private String noteName;
     private int    imageResId;
+    private int    soundResId;
     private float  pitch;
     private float  rightBelowPitch;
     private float  rightAbovePitch;
     private float  lowerBoundPitch;
     private float  upperBoundPitch;
 
-    public PitchingNote(String noteName, int imageResId, float pitch, float rightBelowPitch, float rightAbovePitch) {
+    public PitchingNote(String noteName, int imageResId, float pitch, float rightBelowPitch, float rightAbovePitch, int soundResId) {
         this.noteName = noteName;
         this.imageResId = imageResId;
         this.pitch = pitch;
         this.rightBelowPitch = rightBelowPitch;
         this.rightAbovePitch = rightAbovePitch;
+        this.soundResId = soundResId;
 
         lowerBoundPitch = rightBelowPitch + (pitch - rightBelowPitch) / 2;
         upperBoundPitch = pitch + (rightAbovePitch - pitch) / 2;
@@ -77,6 +79,14 @@ public class PitchingNote {
 
     public void setUpperBoundPitch(float upperBoundPitch) {
         this.upperBoundPitch = upperBoundPitch;
+    }
+
+    public int getSoundResId() {
+        return soundResId;
+    }
+
+    public void setSoundResId(int soundResId) {
+        this.soundResId = soundResId;
     }
 
     public int isFrequencyAtPitch(float freq) {

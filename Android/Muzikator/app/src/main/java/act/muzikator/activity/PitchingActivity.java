@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import act.muzikator.R;
 import act.muzikator.customView.PitchStaffView;
 import act.muzikator.model.PitchingNote;
 import act.muzikator.utils.PitchingUtils;
+import act.muzikator.utils.SoundManager;
 import be.tarsos.dsp.AudioDispatcher;
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.AudioProcessor;
@@ -38,6 +40,7 @@ public class PitchingActivity extends BaseActivity {
     @Bind(R.id.comment)       TextView       comment;
 
     private AudioDispatcher    dispatcher;
+    private SoundManager       soundManager;
     private int                originalRoundCount;
     private long               lastMarkedTime;
     private int                lastNoteIndex;
@@ -71,6 +74,22 @@ public class PitchingActivity extends BaseActivity {
 
         pitchingStaff.getLayoutParams().width = notes.size() * getResources().getDimensionPixelSize(R.dimen.pitchNoteSide);
         passCount.setText(String.format("0/%d", notes.size()));
+
+
+        soundManager = new SoundManager();
+        soundManager.initSounds(this);
+        soundManager.addSoundResource(R.raw.c4);
+        soundManager.addSoundResource(R.raw.d4);
+        soundManager.addSoundResource(R.raw.e4);
+        soundManager.addSoundResource(R.raw.f4);
+        soundManager.addSoundResource(R.raw.g4);
+        soundManager.addSoundResource(R.raw.a4);
+        soundManager.addSoundResource(R.raw.b4);
+        soundManager.addSoundResource(R.raw.c5);
+        soundManager.addSoundResource(R.raw.d5);
+        soundManager.addSoundResource(R.raw.e5);
+        soundManager.addSoundResource(R.raw.f5);
+        soundManager.addSoundResource(R.raw.g5);
     }
 
     private void startRecording() {
@@ -155,6 +174,26 @@ public class PitchingActivity extends BaseActivity {
 
     @OnClick(R.id.playButtton)
     public void playPitching() {
+        playNoteAtIndex(0);
+    }
+
+    private void playNoteAtIndex(final int noteAtIndex) {
+        if (noteAtIndex < notes.size()) {
+            PitchingNote note = notes.get(noteAtIndex);
+            if (note.getImageResId() != R.drawable.o0) {
+                soundManager.playSoundResource(note.getSoundResId());
+            }
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    playNoteAtIndex(noteAtIndex + 1);
+                }
+            }, 1000);
+        }
+    }
+
+    @OnClick(R.id.recordButton)
+    public void recordPitching() {
         final int noteWidth = getResources().getDimensionPixelSize(R.dimen.pitchNoteSide);
         startRecording();
         lastMarkedTime = Calendar.getInstance().getTimeInMillis();
