@@ -61,31 +61,31 @@ public class ClassroomActivity extends BaseActivity {
 
     @OnClick(R.id.tutor1)
     public void tutor1Selected() {
-        videoCallWithTutor();
+        videoCallWithTutor(1);
     }
 
     @OnClick(R.id.tutor2)
     public void tutor2Selected() {
-        videoCallWithTutor();
+        videoCallWithTutor(2);
     }
 
     @OnClick(R.id.tutor3)
     public void tutor3Selected() {
-        videoCallWithTutor();
+        videoCallWithTutor(3);
     }
 
     @OnClick(R.id.tutor4)
     public void tutor4Selected() {
-        videoCallWithTutor();
+        videoCallWithTutor(4);
     }
 
-    private void videoCallWithTutor() {
-        connectToRoom(false, 0);
+    private void videoCallWithTutor(int idx) {
+        connectToRoom(false, 0, idx);
     }
 
-    private void connectToRoom(boolean loopback, int runTimeMs) {
+    private void connectToRoom(boolean loopback, int runTimeMs, int idx) {
         // Get room name (random for loopback).
-        String roomId = "muzikator" + Integer.toString((new Random()).nextInt(100000000));
+        String roomId = "muzikator_" + idx;
         String roomUrl = getString(R.string.pref_room_server_url_default);
 
         // Video call enabled flag.

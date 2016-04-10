@@ -62,4 +62,24 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_homebt_playground"/>
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"
+        android:scaleType="fitXY"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="6dp"
+        android:src="@drawable/icon_account"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"
+        android:scaleType="fitXY"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="6dp"
+        android:src="@drawable/icon_setting"/>
 </RelativeLayout>
