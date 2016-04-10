@@ -80,7 +80,7 @@ public class ClassroomActivity extends BaseActivity {
     }
 
     private void videoCallWithTutor() {
-        connectToRoom(true, 0);
+        connectToRoom(false, 0);
     }
 
     private void connectToRoom(boolean loopback, int runTimeMs) {
