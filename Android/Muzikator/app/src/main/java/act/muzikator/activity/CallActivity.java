@@ -60,7 +60,9 @@ public class CallActivity extends Activity
     implements AppRTCClient.SignalingEvents,
       PeerConnectionClient.PeerConnectionEvents,
       CallFragment.OnCallEvents {
-  public static final String addr = "http://192.168.10.119:23712/central";
+//  public static final String addr = "http://192.168.10.119:23712/central";
+    public static final String addr = "http://128.199.245.229:8080/central";
+
   public static final String EXTRA_ROOMID =
       "org.appspot.apprtc.ROOMID";
   public static final String EXTRA_LOOPBACK =
