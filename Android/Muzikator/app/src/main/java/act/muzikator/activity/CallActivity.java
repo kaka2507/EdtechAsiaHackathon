@@ -37,6 +37,8 @@ import android.view.Window;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
 
+import com.github.nkzawa.socketio.client.IO;
+
 import org.webrtc.EglBase;
 import org.webrtc.IceCandidate;
 import org.webrtc.PeerConnectionFactory;
@@ -44,6 +46,9 @@ import org.webrtc.SessionDescription;
 import org.webrtc.StatsReport;
 import org.webrtc.RendererCommon.ScalingType;
 import org.webrtc.SurfaceViewRenderer;
+
+import java.net.Socket;
+
 import act.muzikator.R;
 import act.muzikator.fragment.CallFragment;
 
@@ -96,6 +101,10 @@ public class CallActivity extends Activity
   public static final String EXTRA_RUNTIME =
       "org.appspot.apprtc.RUNTIME";
   private static final String TAG = "CallRTCClient";
+
+  public Socket socket;
+
+  public static boolean VIRTUAL_INSTRUMENT_ENABLED = false;
 
   // List of mandatory application permissions.
   private static final String[] MANDATORY_PERMISSIONS = {
@@ -279,6 +288,28 @@ public class CallActivity extends Activity
     }
     peerConnectionClient.createPeerConnectionFactory(
         CallActivity.this, peerConnectionParameters, CallActivity.this);
+
+//    this.socket = IO.socket("http://localhost");
+//    this.socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+//
+//      @Override
+//      public void call(Object... args) {
+//        this.socket.emit("foo", "hi");
+//        this.socket.disconnect();
+//      }
+//
+//    }).on("event", new Emitter.Listener() {
+//
+//      @Override
+//      public void call(Object... args) {}
+//
+//    }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
+//
+//      @Override
+//      public void call(Object... args) {}
+//
+//    });
+//    socket.connect();
   }
 
   // Activity interfaces
