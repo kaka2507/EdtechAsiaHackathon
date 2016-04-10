@@ -61,6 +61,13 @@
                 android:background="@drawable/ic_pitch_micro"
                 android:stateListAnimator="@null"/>
         </LinearLayout>
-    </LinearLayout>
 
+        <TextView
+            android:id="@+id/comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:textSize="40dp"/>
+    </LinearLayout>
 </LinearLayout>

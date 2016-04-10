@@ -79,11 +79,17 @@ public class PitchingNote {
         this.upperBoundPitch = upperBoundPitch;
     }
 
-    public boolean isFrequencyAtPitch(float freq) {
+    public int isFrequencyAtPitch(float freq) {
         if (pitch < 0) {
-            return freq < 0;
+            return freq < 0 ? 0 : 1;
         } else {
-            return freq > lowerBoundPitch && freq < upperBoundPitch;
+            if (freq > lowerBoundPitch && freq < upperBoundPitch) {
+                return 0;
+            } else if (freq > upperBoundPitch) {
+                return 1;
+            } else {
+                return -1;
+            }
         }
     }
 }

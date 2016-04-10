@@ -2,6 +2,7 @@ package act.muzikator.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class PitchingActivity extends BaseActivity {
 
     @Bind(R.id.pitchingStaff) PitchStaffView pitchingStaff;
     @Bind(R.id.passCount)     TextView       passCount;
+    @Bind(R.id.comment)       TextView       comment;
 
     private AudioDispatcher    dispatcher;
     private int                originalRoundCount;
@@ -41,6 +43,8 @@ public class PitchingActivity extends BaseActivity {
     private int                lastNoteIndex;
     private int                currentNoteIndex;
     private int                accuTime;
+    private int                lowAccuTime;
+    private int                highAccuTime;
     private int                rightNoteCount;
     private List<PitchingNote> notes;
 
@@ -86,8 +90,13 @@ public class PitchingActivity extends BaseActivity {
                         if (currentNoteIndex == lastNoteIndex) {
                             if (currentNoteIndex >= notes.size()) return;
 
-                            if (notes.get(currentNoteIndex).isFrequencyAtPitch(pitchInHz)) {
+                            int frequencyAtPitch = notes.get(currentNoteIndex).isFrequencyAtPitch(pitchInHz);
+                            if (frequencyAtPitch == 0) {
                                 accuTime += (currentMarkedTime - lastMarkedTime);
+                            } else if (frequencyAtPitch > 0) {
+                                highAccuTime += (currentMarkedTime - lastMarkedTime);
+                            } else {
+                                lowAccuTime += (currentMarkedTime - lastMarkedTime);
                             }
                             lastMarkedTime = currentMarkedTime;
                         } else {
@@ -95,14 +104,30 @@ public class PitchingActivity extends BaseActivity {
                             if (accuTime >= PITCH_THREAHOLD) {
                                 rightNoteCount++;
                                 passCount.setText(String.format("%d/%d", rightNoteCount, notes.size()));
+
+                                comment.setTextColor(Color.GREEN);
+                                comment.setText("Perfect!");
+                            } else {
+                                if (highAccuTime > lowAccuTime) {
+                                    comment.setTextColor(Color.YELLOW);
+                                    comment.setText("Too High!");
+                                } else {
+                                    comment.setTextColor(Color.RED);
+                                    comment.setText("Too Low!");
+                                }
                             }
                             lastNoteIndex = currentNoteIndex;
                             accuTime = 0;
 
                             if (currentNoteIndex >= notes.size()) return;
 
-                            if (notes.get(currentNoteIndex).isFrequencyAtPitch(pitchInHz)) {
+                            int frequencyAtPitch = notes.get(currentNoteIndex).isFrequencyAtPitch(pitchInHz);
+                            if (frequencyAtPitch == 0) {
                                 accuTime += (currentMarkedTime - lastMarkedTime);
+                            } else if (frequencyAtPitch > 0) {
+                                highAccuTime += (currentMarkedTime - lastMarkedTime);
+                            } else {
+                                lowAccuTime += (currentMarkedTime - lastMarkedTime);
                             }
                             lastMarkedTime = currentMarkedTime;
                         }
