@@ -1,7 +1,9 @@
 package act.muzikator.ktv;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.util.Log;
 
 import java.io.FileInputStream;
@@ -13,7 +15,7 @@ import act.muzikator.utils.KTVUtils;
 /**
  * Created by vcoder on 4/9/16.
  */
-public class KTVRecorder implements Player.PlayerListener {
+public class KTVRecorder implements Player.PlayerListener, MediaPlayer.OnPreparedListener {
     private final static String TAG = "KTVRecorder";
     private final static int BACKGROUND_ID = 1;
     private final static int RECORD_ID = 2;
@@ -21,7 +23,7 @@ public class KTVRecorder implements Player.PlayerListener {
     private int resId;
     private Context context;
     private Mp3Player backgroundTrack;
-    private Mp3Player recordedTrack;
+    private MediaPlayer recordedTrack;
     public KTVRecorder(int resId, Context context) {
         this.resId = resId;
         this.context = context;
@@ -34,7 +36,7 @@ public class KTVRecorder implements Player.PlayerListener {
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         recorder.setOutputFile(KTVUtils.GetRecordFilePath(context, resId));
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         recorder.prepare();
 
         // prepare to play background music
@@ -63,11 +65,12 @@ public class KTVRecorder implements Player.PlayerListener {
             backgroundTrack.SetListener(this);
 
             // prepare to play record music
-            recordedTrack = new Mp3Player(RECORD_ID, new FileInputStream(KTVUtils.GetRecordFilePath(context, resId)));
-            recordedTrack.SetListener(this);
+            recordedTrack = new MediaPlayer();
+            recordedTrack.setDataSource(KTVUtils.GetRecordFilePath(context, resId));
+            recordedTrack.prepare();
 
             // play
-//            backgroundTrack.start();
+            backgroundTrack.start();
             recordedTrack.start();
         } catch (IOException e) {
             Log.e(TAG, "file is not existed");
@@ -76,10 +79,15 @@ public class KTVRecorder implements Player.PlayerListener {
     }
 
     public void StopPlaying() {
-//        backgroundTrack.Stop();
+        backgroundTrack.Stop();
         backgroundTrack.Release();
-        recordedTrack.Stop();
-        recordedTrack.Release();
+        recordedTrack.stop();
+        recordedTrack.release();
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        mp.start();
     }
 
     @Override

@@ -17,10 +17,9 @@ public class AACDecoder {
     public static final int DEFAULT_BITRATE = 32000;
     protected static final int DECODE_TIMEOUT = 10000; // 10 seconds
     protected static final int TIME_OUT = 1000;
-    protected final AACDecoderListener listener;
+    protected AACDecoderListener listener;
     protected ConcurrentLinkedQueue<AudioPacket> audioCache;
     protected volatile Status status;
-    protected long lastTSReceive;
     public static final int HEADER_LENGTH = 7;
     private int sampleRate;
     private int channelCount;
@@ -33,7 +32,10 @@ public class AACDecoder {
         this.listener = listener;
         audioCache = new ConcurrentLinkedQueue<>();
         status = Status.NEW;
-        lastTSReceive = 0;
+    }
+
+    public void SetListener(AACDecoderListener listener) {
+        this.listener = listener;
     }
 
     public int Init() throws Exception {
@@ -62,7 +64,6 @@ public class AACDecoder {
         inputBuffers = mediaCodec.getInputBuffers();
         outputBuffers = mediaCodec.getOutputBuffers();
 
-        lastTSReceive = System.currentTimeMillis();
         status = Status.READY;
         return 0;
     }
@@ -78,6 +79,7 @@ public class AACDecoder {
     }
 
     private boolean preDecode() {
+        Debug.log(this, "preDecode cache length:" + audioCache.size());
         AudioPacket packet = audioCache.peek();
         if (packet == null) {
             return false;
@@ -124,10 +126,6 @@ public class AACDecoder {
     }
 
     public Status Execute() throws Exception {
-        if (System.currentTimeMillis() - lastTSReceive > DECODE_TIMEOUT) {
-            return Status.TIMEOUT;
-        }
-
         if (status != Status.READY) {
             return Status.NOTHING;
         }
@@ -138,6 +136,7 @@ public class AACDecoder {
     }
 
     public int EnqueueToDecode(byte[] buf, int len, int seq) {
+        Debug.log(this, "EnqueueToDecode len=" + len);
         if (status != Status.READY)
             return -1;
 
@@ -147,7 +146,6 @@ public class AACDecoder {
         packet.seq = seq;
         packet.buf = buf;
         audioCache.add(packet);
-        lastTSReceive = System.currentTimeMillis();
         return 0;
     }
 
