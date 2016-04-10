@@ -62,12 +62,11 @@
                 android:stateListAnimator="@null"/>
         </LinearLayout>
 
-        <TextView
+        <ImageView
             android:id="@+id/comment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:textSize="40dp"/>
+            android:layout_height="60dp"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="30dp"/>
     </LinearLayout>
 </LinearLayout>

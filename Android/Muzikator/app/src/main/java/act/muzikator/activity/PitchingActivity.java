@@ -2,10 +2,10 @@ package act.muzikator.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class PitchingActivity extends BaseActivity {
 
     @Bind(R.id.pitchingStaff) PitchStaffView pitchingStaff;
     @Bind(R.id.passCount)     TextView       passCount;
-    @Bind(R.id.comment)       TextView       comment;
+    @Bind(R.id.comment)       ImageView      comment;
 
     private AudioDispatcher    dispatcher;
     private SoundManager       soundManager;
@@ -124,15 +124,12 @@ public class PitchingActivity extends BaseActivity {
                                 rightNoteCount++;
                                 passCount.setText(String.format("%d/%d", rightNoteCount, notes.size()));
 
-                                comment.setTextColor(Color.GREEN);
-                                comment.setText("Perfect!");
+                                comment.setImageResource(R.drawable.ic_perfect);
                             } else {
                                 if (highAccuTime > lowAccuTime) {
-                                    comment.setTextColor(Color.YELLOW);
-                                    comment.setText("Too High!");
+                                    comment.setImageResource(R.drawable.ic_too_high);
                                 } else {
-                                    comment.setTextColor(Color.RED);
-                                    comment.setText("Too Low!");
+                                    comment.setImageResource(R.drawable.ic_too_low);
                                 }
                             }
                             lastNoteIndex = currentNoteIndex;
