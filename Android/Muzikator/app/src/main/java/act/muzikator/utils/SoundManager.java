@@ -36,4 +36,9 @@ public class SoundManager {
         int i = this.mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         this.mSoundPool.play(this.mSoundPoolMap.get(resId), i, i, 1, 0, 1.0F);
     }
+
+    public void release() {
+        mSoundPool.release();
+        mSoundPoolMap.clear();
+    }
 }

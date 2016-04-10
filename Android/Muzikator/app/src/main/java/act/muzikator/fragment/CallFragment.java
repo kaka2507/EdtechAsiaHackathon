@@ -258,4 +258,9 @@ public class CallFragment extends Fragment {
     callEvents = (OnCallEvents) activity;
   }
 
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+
+  }
 }

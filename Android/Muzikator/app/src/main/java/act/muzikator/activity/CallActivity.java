@@ -367,6 +367,7 @@ public class CallActivity extends Activity
       logToast.cancel();
     }
     activityRunning = false;
+    socket.close();
     rootEglBase.release();
     super.onDestroy();
   }
