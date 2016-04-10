@@ -48,6 +48,7 @@ import org.webrtc.SurfaceViewRenderer;
 
 import act.muzikator.R;
 import act.muzikator.fragment.CallFragment;
+import act.muzikator.utils.Debug;
 import io.socket.client.*;
 import io.socket.emitter.Emitter;
 
@@ -240,15 +241,16 @@ public class CallActivity extends Activity
       socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-          socket.emit("edtech-classroom-chat-send", "lalalala");
+          Debug.log(this, "baodn: ");
         }
       }).on(Socket.EVENT_MESSAGE, new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-          if(args.length > 0) {
-            JSONObject obj = (JSONObject) args[0];
-            Log.d(TAG, "obj:" + obj);
+          for(int i = 0; i < args.length; ++i) {
+            int note = Integer.parseInt((String) args[i]);
+            callFragment.PlayNote(note);
           }
+
         }
       }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
         @Override
@@ -373,6 +375,11 @@ public class CallActivity extends Activity
   @Override
   public void onCallHangUp() {
     disconnect();
+  }
+
+  @Override
+  public void onPianoNote(int note) {
+    socket.emit("edtech-classroom-chat-send", "" + note);
   }
 
   @Override

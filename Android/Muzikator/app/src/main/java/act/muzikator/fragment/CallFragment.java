@@ -47,6 +47,7 @@ public class CallFragment extends Fragment {
    */
   public interface OnCallEvents {
     public void onCallHangUp();
+    public void onPianoNote(int note);
     public void onCameraSwitch();
     public void onVideoScalingSwitch(ScalingType scalingType);
     public void onCaptureFormatChange(int width, int height, int framerate);
@@ -117,6 +118,7 @@ public class CallFragment extends Fragment {
       @Override
       public void onClick(View view) {
         soundManager.playSoundResource(R.raw.c4);
+        callEvents.onPianoNote(R.raw.c4);
       }
     });
 
@@ -125,6 +127,7 @@ public class CallFragment extends Fragment {
       @Override
       public void onClick(View view) {
         soundManager.playSoundResource(R.raw.d4);
+        callEvents.onPianoNote(R.raw.d4);
       }
     });
 
@@ -133,6 +136,7 @@ public class CallFragment extends Fragment {
       @Override
       public void onClick(View view) {
         soundManager.playSoundResource(R.raw.e4);
+        callEvents.onPianoNote(R.raw.e4);
       }
     });
 
@@ -141,6 +145,7 @@ public class CallFragment extends Fragment {
       @Override
       public void onClick(View view) {
         soundManager.playSoundResource(R.raw.f4);
+        callEvents.onPianoNote(R.raw.f4);
       }
     });
 
@@ -149,6 +154,7 @@ public class CallFragment extends Fragment {
       @Override
       public void onClick(View view) {
         soundManager.playSoundResource(R.raw.g4);
+        callEvents.onPianoNote(R.raw.g4);
       }
     });
 
@@ -157,6 +163,7 @@ public class CallFragment extends Fragment {
       @Override
       public void onClick(View view) {
         soundManager.playSoundResource(R.raw.a4);
+        callEvents.onPianoNote(R.raw.a4);
       }
     });
 
@@ -165,6 +172,7 @@ public class CallFragment extends Fragment {
       @Override
       public void onClick(View view) {
         soundManager.playSoundResource(R.raw.b4);
+        callEvents.onPianoNote(R.raw.b4);
       }
     });
 
@@ -173,6 +181,7 @@ public class CallFragment extends Fragment {
       @Override
       public void onClick(View view) {
         soundManager.playSoundResource(R.raw.c5);
+        callEvents.onPianoNote(R.raw.c5);
       }
     });
 
@@ -181,6 +190,7 @@ public class CallFragment extends Fragment {
       @Override
       public void onClick(View view) {
         soundManager.playSoundResource(R.raw.c4m);
+        callEvents.onPianoNote(R.raw.c4m);
       }
     });
 
@@ -189,6 +199,7 @@ public class CallFragment extends Fragment {
       @Override
       public void onClick(View view) {
         soundManager.playSoundResource(R.raw.d4m);
+        callEvents.onPianoNote(R.raw.d4m);
       }
     });
 
@@ -197,6 +208,7 @@ public class CallFragment extends Fragment {
       @Override
       public void onClick(View view) {
         soundManager.playSoundResource(R.raw.f4m);
+        callEvents.onPianoNote(R.raw.f4m);
       }
     });
 
@@ -205,6 +217,7 @@ public class CallFragment extends Fragment {
       @Override
       public void onClick(View view) {
         soundManager.playSoundResource(R.raw.g4m);
+        callEvents.onPianoNote(R.raw.g4m);
       }
     });
 
@@ -213,12 +226,17 @@ public class CallFragment extends Fragment {
       @Override
       public void onClick(View view) {
         soundManager.playSoundResource(R.raw.a4m);
+        callEvents.onPianoNote(R.raw.a4m);
       }
     });
 
     scalingType = ScalingType.SCALE_ASPECT_FILL;
 
     return controlView;
+  }
+
+  public void PlayNote(int note) {
+    soundManager.playSoundResource(note);
   }
 
   @Override
